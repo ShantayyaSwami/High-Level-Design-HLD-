@@ -1,0 +1,61 @@
+Monolith:
+A single-tier software application where the user interface and data access code are combined into a single program from a single platform.
+Examples: Single Java Jar file handling business logic for various project areas.
+Initial advantages: 
+Simplicity, resource efficiency, suitable for small projects, no over-engineering.
+
+Challenges with growth: Modularity enforcement becomes difficult, scaling becomes a challenge.
+Deployment: All-or-nothing deployment, long release cycles due to the increasing size of the codebase.
+Impact on business: Slower reaction to customer demand due to lengthy release cycles.
+
+Using APIs with Monoliths:
+Misconception: APIs cannot be used with monoliths.
+Reality: Monoliths can be fronted by API Gateways or load balancers, allowing API usage.
+
+Scaling of Monoliths:
+Example scenario: Monolith running on a virtual machine.
+Challenge: Inflexible scaling due to one executable, leading to inefficient resource utilization.
+Scaling consequences: Scaling the entire monolith despite only specific components needing scaling.
+Cost implications: Full-price payment for resources despite partial utilization.
+
+Microservices: Architecture approach where an application is structured as a collection of small, independently deployable services, each representing a specific business capability. 
+Characteristics:
+Independence: Microservices operate independently of each other.
+Scaling: Each microservice can scale irrespective of others.
+Deployment: Microservices can be deployed independently, enabling faster DevOps.
+Testing: Microservices can be tested independently of each other.
+Polyglot: Microservices can be written in different programming languages.
+Considerations: Not all characteristics need to be fulfilled; independence, scaling, and functionality independence are crucial.
+Database usage: While ideal to have separate databases, practical scenarios may involve using a single database for multiple microservices, necessitating scalability considerations.
+
+
+Running Microservices on Amazon EC2:
+Misconception: Some believe you cannot run microservices on Amazon EC2, which is untrue.
+Each microservice can run in its own EC2 instance.
+Different microservices can belong to various auto-scaling groups with distinct scaling criteria.
+Selection of EC2 instance types can be based on microservice requirements (e.g., memory-intensive services may require higher memory instances).
+
+Alternative Hosting Options:
+Elastic Load Balancer or Amazon API Gateway can be used to host microservices for modern application development.
+Serverless alternative: AWS Lambda, where each microservice backend is implemented as separate Lambda functions, automatically scales.
+Containers: Applications can be containerized and run within Amazon Elastic Container Service (ECS) or Elastic Kubernetes Service (EKS).
+
+Focus on Kubernetes:
+Kubernetes is popular.
+Each microservice is fronted by different services in Kubernetes.
+Microservice code runs in containers within pods, all fronted by a single ingress (e.g., Application Load Balancer).
+
+
+Can we run multiple microservices on single ec2?
+Yes, it is possible to run multiple microservices on a single EC2 instance, although it may not be the most optimal approach in all cases. Here are some considerations:
+1. Resource Utilization: Running multiple microservices on a single EC2 instance allows you to maximize resource utilization by consolidating multiple services onto one machine. This can be cost-effective, especially for smaller workloads or during development/testing phases.
+
+2. Isolation: While microservices are designed to be independent and isolated, running them on a single EC2 instance means they will share resources such as CPU, memory, and disk I/O. If one microservice experiences a spike in traffic or resource usage, it could potentially impact the performance of other services on the same instance.
+
+3. Operational Complexity: Managing multiple microservices on a single EC2 instance adds complexity to deployment, monitoring, and scaling. You'll need to carefully manage dependencies, configurations, and resource allocation to ensure smooth operation.
+
+4. Scaling: Scaling individual microservices becomes more challenging when they are all hosted on a single EC2 instance. You may need to scale the entire instance even if only one service requires additional resources, leading to potential over-provisioning or under-utilization.
+
+5. High Availability: Hosting multiple microservices on a single EC2 instance introduces a single point of failure. If the instance becomes unavailable, all hosted services will be affected. Implementing redundancy and failover mechanisms becomes more complicated compared to deploying services across multiple instances or using container orchestration platforms like Kubernetes.
+
+In summary, while it is technically feasible to run multiple microservices on a single EC2 instance, it's important to carefully weigh the trade-offs in terms of resource utilization, isolation, operational complexity, scaling, and high availability. Depending on your specific requirements and workload characteristics, you may choose to deploy microservices on separate instances or utilize containerization technologies for better isolation and manageability.
